@@ -1,14 +1,12 @@
-import argparse # this is a python library for taking in arguments from the terminal 
-								# https://docs.python.org/2/library/argparse.html#module-argparse
-
+import sys
 # why are we using python? need to be able to answer this.
 
-# create a parser object
-parser = argparse.ArgumentParser(description='Process source code files.')
+with open(sys.argv[1], "r") as code:
+	read_data = code.read()
 
+def getExt(file_name):
+	my_array = file_name[::-1].split('.')
+	return my_array[0][::-1]
 
-def getinput(source):
-	with open(source, "r") as code:
-		read_date = code.read()
-
+print(getExt(sys.argv[1]))
 
