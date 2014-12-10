@@ -17,13 +17,13 @@ def getExt(file_name):
 	return my_array[0][::-1]
 
 def checkLanguage(ext):
-	supported = False
 	try:
 		with open('supported-languages.txt', "r") as supplang:
+			supported = False
 			for extension in supplang:
 				if ext in extension:
 					 supported = True
-		return supported
+			return supported
 	except IOError:
 		print("Cannot open file! please include correct file extension") 
 	except ValueError:
@@ -32,7 +32,8 @@ def checkLanguage(ext):
 		print("Unexpected error:", sys.exc_info()[0])
 		raise
 
-if checkLanguage(getExt(sys.argv[1])):
+ext = getExt(sys.argv[1])
+if checkLanguage(ext):
 	#continue with parsing
 	print("it's supported")
 	pass
