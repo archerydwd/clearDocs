@@ -1,9 +1,9 @@
-import sys
+import sys, io
 # why are we using python? need to be able to answer this.
 
 try:
 	with open(sys.argv[1], "r") as code:
-		read_data = code.read()
+		read_data = code.read().split('\n')
 except IOError:
 	print("Cannot open file! please include correct file extension") 
 except ValueError:
@@ -34,9 +34,9 @@ def checkLanguage(ext):
 
 ext = getExt(sys.argv[1])
 if checkLanguage(ext):
-
-	#continue with parsing
-	print("it's supported")
+	for line in read_data:
+		if 'public' in line or 'private' in line:
+			print(line)
 	pass
 else:
 	print("it's not supported")
