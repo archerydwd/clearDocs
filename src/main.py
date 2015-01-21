@@ -34,6 +34,7 @@ def checkLanguage(ext):
 
 ext = getExt(sys.argv[1])
 if checkLanguage(ext):
+
 	#continue with parsing
 	print("it's supported")
 	pass
