@@ -1,3 +1,10 @@
+/*
+ *This is a demo class comment that describes the DemoClass class.
+ *
+ * @author Darren Daly
+ * @version 1.0
+ * @since 2015-01-28
+*/
 public class DemoClass
 {
 	private int x;
@@ -29,7 +36,7 @@ public class DemoClass
 		s1();
 		return;
 	}
-	
+
 	public void i2() {
 		s1();
 		i1();
@@ -49,6 +56,12 @@ public class DemoClass
 		overload(true);
 	}
 
+	/*
+	 * Description of method.
+	 * 
+	 * @param byte b
+	 * @return void
+	 */
 	public void overload(byte b) {
 		System.out.println("byte");
 	}    
