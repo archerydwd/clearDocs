@@ -39,19 +39,21 @@ def checkLanguage(ext):
 ext = getExt(sys.argv[1])
 if checkLanguage(ext):
 	for line in read_data:
-		if 'public' in line or 'private' in line:
-			print(line)
+	#	if 'public' in line or 'private' in line:
+	#		print(line)
 		
 		# Identify name of the class to be used in the class summary section
 		# Ignore 'class' if inside a comment section
 		if 'class' in line and '*' not in line and '//' not in line:
 			print("Class Summary")
 			pos=line.index('class')
-			wordsof = line[5:].split()
-			print(wordsof[2])
-			print("Access Specifier: ",)
-		
-		if '*' in line or '//' in line:
-			print(line)
+			wordsof = line[7:].split()
+			print(wordsof[1])
+			print("Access Modifier: ",)
+			line_items = line.split()
+			print(line_items[0])
+			
+#		if '*' in line or '//' in line:
+#			print(line)
 else:
 	print("it's not supported")
