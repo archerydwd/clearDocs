@@ -1,5 +1,7 @@
+from pygments import highlight
+from pygments.lexers import PythonLexer
+from pygments.formatters import HtmlFormatter
 import sys, io, os
-# why are we using python? need to be able to answer this.
 
 file_dir = os.path.dirname(__file__)
 rel_supported_languages = 'supported-languages.txt'
@@ -38,22 +40,34 @@ def checkLanguage(ext):
 
 ext = getExt(sys.argv[1])
 if checkLanguage(ext):
+	inserted = False
 	for line in read_data:
-	#	if 'public' in line or 'private' in line:
-	#		print(line)
 		
 		# Identify name of the class to be used in the class summary section
 		# Ignore 'class' if inside a comment section
 		if 'class' in line and '*' not in line and '//' not in line:
-			print("Class Summary")
+			comment_file = "Class Summary"
 			pos=line.index('class')
 			wordsof = line[7:].split()
-			print(wordsof[1])
-			print("Access Modifier: ",)
+			comment_file = comment_file + "\n" + wordsof[1]
+			comment_file = comment_file + "\n" + "Access Modifier: "
 			line_items = line.split()
-			print(line_items[0])
+			comment_file = comment_file + "\n" + line_items[0] + "\n"
 			
-#		if '*' in line or '//' in line:
-#			print(line)
+		if 'public' in line or 'private' in line:
+			if inserted == False: 
+				inserted = True
+				comment_file = comment_file + "\nMethods in file:\n"
+			comment_file = comment_file + line + "\n"
+		
+	#	if '*' in line or '//' in line:
+	#	 	comment_file = comment_file + "\nComments in file:\n"
+	#	 	comment_file = comment_file + line + "\n"
+		
+	with open(wordsof[1] + "Comments.html", 'w') as html_file:
+		html_file.write(highlight(comment_file, PythonLexer(), HtmlFormatter()))
 else:
 	print("it's not supported")
+
+
+
