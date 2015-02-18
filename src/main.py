@@ -76,9 +76,9 @@ if checkLanguage(ext):
 	for line in list_of_attributes:
 		comment_file = comment_file + line.lstrip() + "\n"
 
-	#	if '*' in line or '//' in line:
-	#		comment_file = comment_file + "\nComments in file:\n"
-	#		comment_file = comment_file + line + "\n"
+	comment_file = comment_file + "\nCode:\n"
+	for line in read_data:
+		comment_file = comment_file + line + "\n"
 		
 	with open(class_name + "Comments.html", 'w') as html_file:
 		html_file.write(highlight(comment_file, PythonLexer(), HtmlFormatter()))
