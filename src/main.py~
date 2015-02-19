@@ -80,7 +80,7 @@ if checkLanguage(ext):
 			data_types=['byte','short','int','long','float','double','char','String','boolean','(' + class_name]
 			# Identify any other Constructors
 			if class_name in line and '(' in line and any(word in line for word in data_types):
-				comment_file = comment_file + "\tOther Constructor:" + line + "\n"
+				comment_file = comment_file + "\tOther Constructor(s):" + line + "\n"
 				
 	
 	comment_file = comment_file + "\nClass Attributes in file:\n"

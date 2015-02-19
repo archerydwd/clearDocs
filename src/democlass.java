@@ -18,6 +18,10 @@ public class DemoClass
 	{
 		this.x = x;
 	}
+	public DemoClass(double x, int x)
+	{
+		this.x = x;
+	}
 
 	public DemoClass(DemoClass otherDemo)
 	{
