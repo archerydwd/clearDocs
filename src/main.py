@@ -62,11 +62,10 @@ if checkLanguage(ext):
 		
 		# Identify methods and attributes adding the methods to the output and storing the attributes to be added after the loop
 		if 'public' in line or 'private' in line or 'protected' in line:
-			if inserted == False: 
-				
-				comment_file = comment_file + "\nMethods in file:\n"
-				inserted = True
 			if class_name not in line and 'public static void main(String[] args)' not in line and '(' in line:
+				if inserted == False: 
+					comment_file = comment_file + "\nMethods in file:\n"
+					inserted = True
 				comment_file = comment_file + line.lstrip() + "\n"
 	
 			if '(' not in line and class_name not in line:
