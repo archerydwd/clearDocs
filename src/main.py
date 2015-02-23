@@ -1,6 +1,3 @@
-from pygments import highlight
-from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
 import sys, io, os
 
 file_dir = os.path.dirname(__file__)
@@ -47,51 +44,76 @@ def checkLanguage(ext):
 ext = getExt(sys.argv[1])
 if checkLanguage(ext):
 	inserted = False
-	comment_file = ""
+	comment_file = "<html><head><title>ClearDocs</title></head><body>"
 	list_of_attributes = []
+	count = 0
+	counter = 0
+	attr_count = 0
 	for line in read_data:
 		# Identify name of the class to be used in the class summary section
 		# Ignore 'class' if inside a comment section
 		if 'class' in line and '*' not in line and '//' not in line:
-			comment_file = "Class Summary"
+			comment_file = comment_file + "<u><b>Class Summary</b></u><br> <b>Class Name</b><br>"
 			class_name = getClassName(line) 
-			comment_file = comment_file + "\n" + class_name
-			comment_file = comment_file + "\n" + "Access Modifier: "
+			comment_file = comment_file + class_name
+			comment_file = comment_file + "<br>" + "<b>Access Modifier</b>"
 			line_items = line.split()
-			comment_file = comment_file + "\n" + line_items[0] + "\n"
+			comment_file = comment_file + "<br>" + line_items[0] + "<br>"
 		
 		# Identify methods and attributes adding the methods to the output and storing the attributes to be added after the loop
 		if 'public' in line or 'private' in line or 'protected' in line:
 			if class_name not in line and 'public static void main(String[] args)' not in line and '(' in line:
 				if inserted == False: 
-					comment_file = comment_file + "\nMethods in file:\n"
+					comment_file = comment_file + "<br><u><b>Method Summary</b></u><br>"
 					inserted = True
-				comment_file = comment_file + line.lstrip() + "\n"
+				comment_file = comment_file + "&emsp;<a href='#method" + str(count) + "'>" + line.lstrip() + "</a><br>"
+				count += 1
 	
 			if '(' not in line and class_name not in line:
 				list_of_attributes.append(line)
-					
+			
 			# Identify Default Constructors
 			if class_name in line and '()' in line:
-				comment_file = comment_file + "\nConstructors in file: \n"	
-				comment_file = comment_file + "\tDefault Constructor: " + line + "\n"
+				comment_file = comment_file + "<br><u><b>Constructor summary</b></u><br>"	
+				comment_file = comment_file + "&emsp;Default Constructor: <a href='#constructor" + str(counter) + "'>" + line + "</a><br>"
+				counter += 1		
 			# List containing Java data types 
 			data_types=['byte','short','int','long','float','double','char','String','boolean','(' + class_name]
 			# Identify any other Constructors
 			if class_name in line and '(' in line and any(word in line for word in data_types):
-				comment_file = comment_file + "\tOther Constructor:" + line + "\n"
-				
+				comment_file = comment_file + "&emsp;Other Constructor: <a href='#constructor" + str(counter) + "'>" + line + "</a><br>"
+				counter += 1		
 	
-	comment_file = comment_file + "\nClass Attributes in file:\n"
+	comment_file = comment_file + "<br><u><b>Class Attribute summary</b></u><br>"
 	for line in list_of_attributes:
-		comment_file = comment_file + line.lstrip() + "\n"
+		comment_file = comment_file + "&emsp;<a href='#attribute" + str(attr_count) + "'>" + line.lstrip() + "</a><br>"
+		attr_count += 1
 
-	comment_file = comment_file + "\nCode:\n"
+	comment_file = comment_file + "<br><u><b>Code</b></u><br>"
+	
+	countm = 0
+	countc = 0
+	counta = 0
 	for line in read_data:
-		comment_file = comment_file + line + "\n"
-		
+		if 'public' in line or 'private' in line or 'protected' in line:
+			if class_name not in line and 'public static void main(String[] args)' not in line and '(' in line:
+				comment_file = comment_file + "<a name='method" + str(countm) + "'></a>"
+				countm += 1
+			if '(' not in line and class_name not in line:
+				comment_file = comment_file + "<a name='attribute" + str(counta) + "'></a>"
+				counta += 1
+			if class_name in line and '()' in line:
+				comment_file = comment_file + "<a name='constructor" + str(countc) + "'></a>"
+				countc += 1
+			if class_name in line and '(' in line and any(word in line for word in data_types):
+				comment_file = comment_file + "<a name='constructor" + str(countc) + "'></a>"
+				countc += 1		
+		comment_file = comment_file + line + "<br>"
+	
+	comment_file = comment_file + "<br></body></html>"
+
 	with open(class_name + "Comments.html", 'w') as html_file:
-		html_file.write(highlight(comment_file, PythonLexer(), HtmlFormatter()))
+		html_file.write(comment_file)
 else:
 	print("it's not supported")
 
