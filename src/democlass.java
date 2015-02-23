@@ -13,7 +13,6 @@ public class DemoClass
 	{
 		x = 0;
 	}
-
 	public DemoClass(int x)
 	{
 		this.x = x;
@@ -22,32 +21,22 @@ public class DemoClass
 	{
 		this.x = x;
 	}
-
 	public DemoClass(DemoClass otherDemo)
 	{
 		this.x = otherDemo.x;
 	}
-
-	public static void s1() {
-		return;
+	private double mul(double a, double b) 
+	{
+		return a * b;
 	}
-
-	public void i1() {
-		return;
-	}
-
-	public static void s2() {
-		s1();
-		return;
-	}
-
-	public void i2() {
+	private static void i2() 
+	{
 		s1();
 		i1();
 		return;
 	}
-	
-	public void overloadTester() {
+	public void overloadTester() 
+	{
 		System.out.println("overloadTester:\n");
 
 		overload((byte)1);
@@ -59,43 +48,46 @@ public class DemoClass
 		overload('1');
 		overload(true);
 	}
-
 	/*
 	 * Description of method.
 	 * 
 	 * @param byte b
 	 * @return void
 	 */
-	public void overload(byte b) {
+	public void overload(byte b) 
+	{
 		System.out.println("byte");
 	}    
-	public void overload(short s) {
+	public void overload(short s) 
+	{
 		System.out.println("short");
 	}    
-	public void overload(int i) {
+	public void overload(int i) 
+	{
 		System.out.println("int");
 	}
-	public void overload(long l) {
+	public void overload(long l) 
+	{
 		System.out.println("long");
 	}
 	public void overload(float f) {
 		System.out.println("float");
 	}
-	public void overload(double d) {
+	public void overload(double d) 
+	{
 		System.out.println("double");
 	}    
-	public void overload(char c) {
+	public void overload(char c) 
+	{
 		System.out.println("char");
 	}    
-	public void overload(boolean b) {
+	public void overload(boolean b) 
+	{
 		System.out.println("boolean");
 	}    
-
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		DemoClass dc = new DemoClass();
 		dc.overloadTester();
 	}
 }
-
-
-

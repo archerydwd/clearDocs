@@ -66,9 +66,15 @@ if checkLanguage(ext):
 				if inserted == False: 
 					comment_file = comment_file + "<br><u><b>Method Summary</b></u><br>"
 					inserted = True
+				comment_file = comment_file + "&emsp;<b>Method Name and Formal Parameters</b><br>"
 				comment_file = comment_file + "&emsp;<a href='#method" + str(count) + "'>" + line.lstrip() + "</a><br>"
 				count += 1
-	
+				line_items = line.split()
+				comment_file = comment_file + "&emsp;<b>Access Modifier: " + line_items[0] + "</b><br>"	
+				if 'static' in line:
+					 comment_file = comment_file + "&emsp;<b>Type: " + line_items[1] + " " + line_items[2] + "</b><br><br>"
+				else:
+					comment_file = comment_file + "&emsp;<b>Type: " + line_items[1] + "</b><br><br>"
 			if '(' not in line and class_name not in line:
 				list_of_attributes.append(line)
 			
@@ -80,7 +86,7 @@ if checkLanguage(ext):
 			# List containing Java data types 
 			data_types=['byte','short','int','long','float','double','char','String','boolean','(' + class_name]
 			# Identify any other Constructors
-			if class_name in line and '(' in line and any(word in line for word in data_types):
+			if class_name in line and not '()' in line and any(word in line for word in data_types):
 				comment_file = comment_file + "&emsp;Other Constructor: <a href='#constructor" + str(counter) + "'>" + line + "</a><br>"
 				counter += 1		
 	
