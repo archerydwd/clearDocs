@@ -1,3 +1,18 @@
+# Authors: Matthew Dalton, Darren Daly
+# Student numbers: C00096264, C00114398
+# Version: 1.0 - supports java
+# Date: 24/02/2015
+#
+# Description: To run this, you must have python 3 installed. 
+# 	Pass in the path to the file that you want documentation generated for as an argument. eg: python3 src/main.py democlass.java
+#		This will then generate a html file named: DemoClassDoc.html
+# This html file contains:
+#		class summary
+#		constructor summary with links to constructors in the code
+#		method summary with links to methods in the code
+#		class attribute summary with links to attributes in the code
+#		code
+# The idea is to provide documentation in a seperate place to the code, this is to provide for clean code standards, such as self documenting code.
 import sys, io, os
 
 file_dir = os.path.dirname(__file__)
@@ -118,7 +133,7 @@ if checkLanguage(ext):
 	
 	comment_file = comment_file + "<br></body></html>"
 
-	with open(class_name + "Comments.html", 'w') as html_file:
+	with open(class_name + "Doc.html", 'w') as html_file:
 		html_file.write(comment_file)
 else:
 	print("it's not supported")
